@@ -7,13 +7,13 @@ const string imageSourceUrl = "https://raw.githubusercontent.com/Nishisonic/gkco
 
 IEnumerable<int> shipIds = Enumerable.Range(1, 1499);
 
-List<string> resourceTypes = new()
-{
+List<string> resourceTypes =
+[
 	"banner",
 	"album_status",
 	"remodel",
 	"card",
-};
+];
 
 HttpClient client = new();
 
@@ -27,7 +27,7 @@ foreach (int shipId in shipIds)
 		if (!response.IsSuccessStatusCode) continue;
 
 		string realLink = GetShipImagePath(shipId, false, resourceType);
-		string saveLocation = Path.Combine(realLink.Split("/").Prepend(fileSavePath).ToArray());
+		string saveLocation = Path.Combine([.. realLink.Split("/").Prepend(fileSavePath)]);
 
 		string directoryName = Path.GetDirectoryName(saveLocation)!;
 		Directory.CreateDirectory(directoryName);
@@ -43,8 +43,8 @@ int CreateKey(string? t) => t?.Sum(c => c) ?? 0;
 
 string CreateHash(int shipId, string imageType)
 {
-	List<int> resource = new()
-	{
+	List<int> resource =
+	[
 		6657, 5699, 3371, 8909, 7719, 6229, 5449, 8561,
 		2987, 5501, 3127, 9319, 4365, 9811, 9927, 2423, 3439, 1865, 5925,
 		4409, 5509, 1517, 9695, 9255, 5325, 3691, 5519, 6949, 5607, 9539,
@@ -55,16 +55,16 @@ string CreateHash(int shipId, string imageType)
 		5681, 2345, 9873, 6349, 9315, 3795, 9737, 4633, 4173, 7549, 7171,
 		6147, 4723, 5039, 2723, 7815, 6201, 5999, 5339, 4431, 2911, 4435,
 		3611, 4423, 9517, 3243,
-	};
+	];
 
-	List<int> voice = new()
-	{
+	List<int> voice =
+	[
 		2475, 6547, 1471, 8691, 7847, 3595, 1767, 3311, 2507, 9651, 5321,
 		4473, 7117, 5947, 9489, 2669, 8741, 6149, 1301, 7297, 2975, 6413,
 		8391, 9705, 2243, 2091, 4231, 3107, 9499, 4205, 6013, 3393, 6401,
 		6985, 3683, 9447, 3287, 5181, 7587, 9353, 2135, 4947, 5405, 5223,
 		9457, 5767, 9265, 8191, 3927, 3061, 2805, 3273, 7331,
-	};
+	];
 
 	int s = CreateKey(imageType);
 	int a = imageType.Length;
